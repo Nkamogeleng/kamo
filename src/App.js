@@ -8,16 +8,6 @@ import { Button, Card, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
-
-/* This is the main function
-we define our list -todos 
-We using the state hook 
-*/
-
-// set recalls the item
-
-
 // function App() {
 //   const [item, setItems] = useState('');
 //   const [todos, SetTodos] = useState([]);
@@ -95,22 +85,18 @@ We using the state hook
 //     </div>
 //   )
 // }
-function Todo({ todo, index, markTodo, removeTodo }) {
-  return (
-    <div
-      className="todo"
-      
-    >
-      <span style={{ textDecoration: todo.isDone ? "line-through" : "" }}>{todo.text}</span>
-      <div>
-        <Button variant="outline-success" onClick={() => markTodo(index)}>✓complete</Button>{' '}
-        <Button variant="outline-danger" onClick={() => removeTodo(index)}>✕remove</Button>
-      </div>
-    </div>
-  );
-}
 
+
+
+/* Below we create 3 components, 3 states and an object in order to create our to do list app.
+we first create a form where our users will add the items
+using the state hook, we define our list -todos 
+ 
+*/
+
+// This is where we create our form, where the user will enter items
 function FormTodo({ addTodo }) {
+      // set item recalls the item, we also use preventDefault to prevent auto refresh.
   const [value, setValue] = React.useState("");
 
   const handleSubmit = e => {
@@ -119,7 +105,7 @@ function FormTodo({ addTodo }) {
     addTodo(value);
     setValue("");
   };
-
+// we want to return the form with the place holders and submit buttoninput
   return (
     <Form onSubmit={handleSubmit}> 
     <Form.Group>
@@ -133,6 +119,27 @@ function FormTodo({ addTodo }) {
   );
 }
 
+// secondly we create a funtion for our output. Here we create the remove and complete button with our input.
+function Todo({ todo, index, markTodo, removeTodo }) {
+      
+  return (
+    <div
+      className="todo"
+      
+    >
+//         if the to is done then line through
+      <span style={{ textDecoration: todo.isDone ? "line-through" : "" }}>{todo.text}</span>
+      <div>
+        <Button variant="outline-success" onClick={() => markTodo(index)}>✓complete</Button>{' '}
+        <Button variant="outline-danger" onClick={() => removeTodo(index)}>✕remove</Button>
+      </div>
+    </div>
+  );
+}
+
+/** This where we put everything together. we takes the strings inputed, set them attach the new string. 
+ the three dots before todos is the array of the value of todos.
+ so we basically have 3 elements and we adding a new a element to them. we define it also for when we want to remove and complete the to do.  **/
 function App() {
   const [todos, setTodos] = React.useState([
     {
